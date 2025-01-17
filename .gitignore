@@ -1,0 +1,4 @@
+bin/*
+obj/*
+BetManager.csproj
+Program.cs
