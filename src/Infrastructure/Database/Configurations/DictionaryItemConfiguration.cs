@@ -5,7 +5,7 @@ namespace BetManager.Infrastructure.Database.Configurations
 {
     public static class DictionaryItemConfiguration
     {
-        public static void ConfigureDictionaryItem(this ModelBuilder modelBuilder)
+        public static void ConfigureDictionaryItems(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DictionaryItem>(entity => 
             {

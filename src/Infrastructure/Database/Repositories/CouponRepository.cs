@@ -8,6 +8,9 @@ namespace BetManager.Infrastructure.Database.Repositories
     {
         private readonly ApplicationDbContext _context = context;
 
+        public async Task<List<Coupon>> GetAllAsync()
+            => await _context.Coupons.ToListAsync();
+
         public async Task<Coupon?> GetByIdAsync(Guid id)
             => await _context.Coupons.FirstOrDefaultAsync(e => e.Id == id);      
 

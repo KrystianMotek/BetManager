@@ -15,10 +15,7 @@ namespace BetManager.Infrastructure.Database
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var configuration = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("appsettings.json")
-                    .Build();
+                var configuration = new ConfigurationBuilder().Build();
 
                 var connectionString = configuration.GetConnectionString("DefaultConnection");
 

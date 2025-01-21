@@ -5,7 +5,7 @@ namespace BetManager.Infrastructure.Database.Configurations
 {
     public static class CouponConfiguration
     {
-        public static void ConfigureCoupon(this ModelBuilder modelBuilder)
+        public static void ConfigureCoupons(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Coupon>(entity =>
             {

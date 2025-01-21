@@ -5,9 +5,10 @@ namespace BetManager.Domain.Services
 {
     public interface ICouponService
     {
-        Task<List<Coupon>> GetCouponsAsync();
+        // filtering is required to prevent to much records returned
+        Task<List<Coupon>> GetCouponsAsync(); 
         Task<Coupon?> GetCouponByIdAsync(Guid id);
         Task<Coupon> CreateCouponAsync(CreateCouponDTO createCouponDTO);
-        Task DeleteCouponAsync(Guid id);
+        Task<Coupon?> DeleteCouponAsync(Guid id);
     }
 }
