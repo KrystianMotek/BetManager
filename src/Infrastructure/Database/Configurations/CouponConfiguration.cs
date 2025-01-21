@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BetManager.Infrastructure.Database.Configurations
 {
-    public class CouponConfiguration
+    public static class CouponConfiguration
     {
         public static void ConfigureCoupon(this ModelBuilder modelBuilder)
         {

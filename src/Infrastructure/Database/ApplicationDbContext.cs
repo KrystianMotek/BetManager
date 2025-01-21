@@ -28,6 +28,8 @@ namespace BetManager.Infrastructure.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.ConfigureCoupons();
             modelBuilder.ConfigureCouponPositions();
             modelBuilder.ConfigureDictionaryItems();

@@ -1,9 +1,9 @@
 using BetManager.Domain.Models;
-using Microsofr.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace BetManager.Infrastructure.Database.Configurations
 {
-    public class CouponPositionConfiguration
+    public static class CouponPositionConfiguration
     {
         public static void ConfigureCouponPosition(this ModelBuilder modelBuilder)
         {

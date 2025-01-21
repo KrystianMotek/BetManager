@@ -35,7 +35,7 @@ namespace BetManager.Application.Models.DTO
             Guid couponId, 
             DictionaryItemDTO status, 
             DictionaryItemDTO discipline,
-            DictionaryItemDTO bettingType
+            DictionaryItemDTO bettingType,
             string description,
             string choice,  
             decimal odds

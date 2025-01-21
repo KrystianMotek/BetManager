@@ -5,8 +5,8 @@ namespace BetManager.Domain.Models
         protected BaseEntity()
         {
             Id = Guid.NewGuid();
-            CreatedAt = DateTime.UtcNow();
-            ModifiedAt = DateTime.UtcNow();
+            CreatedAt = DateTime.UtcNow;
+            ModifiedAt = DateTime.UtcNow;
         }
 
         public Guid Id { get; set; }

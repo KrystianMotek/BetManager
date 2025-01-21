@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BetManager.Infrastructure.Database.Configurations
 {
-    public class DictionaryItemConfiguration
+    public static class DictionaryItemConfiguration
     {
         public static void ConfigureDictionaryItem(this ModelBuilder modelBuilder)
         {

@@ -5,10 +5,9 @@ namespace BetManager.Domain.Services
 {
     public interface ICouponService
     {
-        Task<List<CouponDTO>> GetCouponsAsync();
+        Task<List<Coupon>> GetCouponsAsync();
         Task<Coupon?> GetCouponByIdAsync(Guid id);
         Task<Coupon> CreateCouponAsync(CreateCouponDTO createCouponDTO);
-        Task<Coupon> UpdateCouponAsync(CouponDTO couponDTO);
         Task DeleteCouponAsync(Guid id);
     }
 }
