@@ -1,5 +1,7 @@
 bin/*
 obj/*
+Migrations/*
+appsettings.json
 src/Application/appsettings.json
 BetManager.csproj
 Program.cs

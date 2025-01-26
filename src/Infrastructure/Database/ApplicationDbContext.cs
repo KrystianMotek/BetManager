@@ -15,7 +15,10 @@ namespace BetManager.Infrastructure.Database
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var configuration = new ConfigurationBuilder().Build();
+                var configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json")
+                    .Build();
 
                 var connectionString = configuration.GetConnectionString("DefaultConnection");
 
@@ -32,8 +35,8 @@ namespace BetManager.Infrastructure.Database
             modelBuilder.ConfigureDictionaryItems();
         }
 
-        public required DbSet<Coupon> Coupons { get; set; }
-        public required DbSet<CouponPosition> CouponPositions { get; set; }
-        public required DbSet<DictionaryItem> DictionaryItems { get; set; }
+        public DbSet<Coupon> Coupons { get; set; }
+        public DbSet<CouponPosition> CouponPositions { get; set; }
+        public DbSet<DictionaryItem> DictionaryItems { get; set; }
     }
 }
