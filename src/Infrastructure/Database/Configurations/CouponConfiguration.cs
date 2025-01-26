@@ -24,19 +24,24 @@ namespace BetManager.Infrastructure.Database.Configurations
                       .IsRequired();
                 
                 entity.Property(e => e.Stake)
-                      .IsRequired();
+                      .IsRequired()
+                      .HasPrecision(10, 2);
 
                 entity.Property(e => e.TotalOdds)
-                      .IsRequired();
+                      .IsRequired()
+                      .HasPrecision(10, 2);
 
                 entity.Property(e => e.PossibleProfit)
-                      .IsRequired();
+                      .IsRequired()
+                      .HasPrecision(10, 2);
 
                 entity.Property(e => e.TaxRate)
-                      .IsRequired();
+                      .IsRequired()
+                      .HasPrecision(10, 2);
 
                 entity.Property(e => e.TaxAmount)
-                      .IsRequired();
+                      .IsRequired()
+                      .HasPrecision(10, 2);
                 
                 entity.Property(e => e.CreatedAt)
                       .ValueGeneratedOnAdd();
@@ -49,15 +54,17 @@ namespace BetManager.Infrastructure.Database.Configurations
 
                 entity.HasMany(e => e.Positions)
                       .WithOne(p => p.Coupon)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.NoAction);
 
                 entity.HasOne(e => e.CouponType)
                       .WithMany()
-                      .HasForeignKey(e => e.CouponTypeId);
+                      .HasForeignKey(e => e.CouponTypeId)
+                      .OnDelete(DeleteBehavior.NoAction);
 
                 entity.HasOne(e => e.Status)
                       .WithMany()
-                      .HasForeignKey(e => e.StatusId);
+                      .HasForeignKey(e => e.StatusId)
+                      .OnDelete(DeleteBehavior.NoAction);
             });
         }
     }

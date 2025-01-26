@@ -25,7 +25,8 @@ namespace BetManager.Infrastructure.Database.Configurations
                       .HasMaxLength(40);
 
                 entity.Property(e => e.Odds)
-                      .IsRequired();
+                      .IsRequired()
+                      .HasPrecision(10, 2);
 
                 entity.Property(e => e.CreatedAt)
                       .ValueGeneratedOnAdd();
@@ -34,20 +35,24 @@ namespace BetManager.Infrastructure.Database.Configurations
                       .ValueGeneratedOnAdd();
 
                 entity.HasOne(e => e.Coupon)
-                      .WithMany()
-                      .HasForeignKey(e => e.CouponId);
+                      .WithMany(c => c.Positions)
+                      .HasForeignKey(e => e.CouponId)
+                      .OnDelete(DeleteBehavior.Cascade);
                 
                 entity.HasOne(e => e.Status)
                       .WithMany()
-                      .HasForeignKey(e => e.StatusId);
+                      .HasForeignKey(e => e.StatusId)
+                      .OnDelete(DeleteBehavior.NoAction);
 
                 entity.HasOne(e => e.Discipline)
                       .WithMany()
-                      .HasForeignKey(e => e.DisciplineId);
+                      .HasForeignKey(e => e.DisciplineId)
+                      .OnDelete(DeleteBehavior.NoAction);
 
                 entity.HasOne(e => e.BettingType)
                       .WithMany()
-                      .HasForeignKey(e => e.BettingTypeId);
+                      .HasForeignKey(e => e.BettingTypeId)
+                      .OnDelete(DeleteBehavior.NoAction);
             });
         }
     }
