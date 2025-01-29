@@ -7,6 +7,7 @@ namespace BetManager.Domain.Models
         public Guid DisciplineId { get; set; }
         public Guid BettingTypeId { get; set; }
         public string Description { get; set; }
+        public int PositionNumber { get; set; }
         public string Choice { get; set; }
         public decimal Odds { get; set; }
 

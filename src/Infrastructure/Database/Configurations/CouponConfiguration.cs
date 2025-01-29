@@ -11,59 +11,59 @@ namespace BetManager.Infrastructure.Database.Configurations
             {
                 entity.ToTable("Coupons");
 
-                entity.HasKey(e => e.Id);
+                entity.HasKey(c => c.Id);
 
-                entity.Property(e => e.Id)
+                entity.Property(c => c.Id)
                       .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.CouponNumber)
+                entity.Property(c => c.CouponNumber)
                       .IsRequired()
                       .HasMaxLength(40);
                 
-                entity.Property(e => e.ConclusionTime)
+                entity.Property(c => c.ConclusionTime)
                       .IsRequired();
                 
-                entity.Property(e => e.Stake)
+                entity.Property(c => c.Stake)
                       .IsRequired()
                       .HasPrecision(10, 2);
 
-                entity.Property(e => e.TotalOdds)
+                entity.Property(c => c.TotalOdds)
                       .IsRequired()
                       .HasPrecision(10, 2);
 
-                entity.Property(e => e.PossibleProfit)
+                entity.Property(c => c.PossibleProfit)
                       .IsRequired()
                       .HasPrecision(10, 2);
 
-                entity.Property(e => e.TaxRate)
+                entity.Property(c => c.TaxRate)
                       .IsRequired()
                       .HasPrecision(10, 2);
 
-                entity.Property(e => e.TaxAmount)
+                entity.Property(c => c.TaxAmount)
                       .IsRequired()
                       .HasPrecision(10, 2);
                 
-                entity.Property(e => e.CreatedAt)
+                entity.Property(c => c.CreatedAt)
                       .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.ModifiedAt)
+                entity.Property(c => c.ModifiedAt)
                       .ValueGeneratedOnAdd();
 
-                entity.HasIndex(e => e.CouponNumber)
+                entity.HasIndex(c => c.CouponNumber)
                       .IsUnique();
 
-                entity.HasMany(e => e.Positions)
+                entity.HasMany(c => c.Positions)
                       .WithOne(p => p.Coupon)
                       .OnDelete(DeleteBehavior.NoAction);
 
-                entity.HasOne(e => e.CouponType)
+                entity.HasOne(c => c.CouponType)
                       .WithMany()
-                      .HasForeignKey(e => e.CouponTypeId)
+                      .HasForeignKey(c => c.CouponTypeId)
                       .OnDelete(DeleteBehavior.NoAction);
 
-                entity.HasOne(e => e.Status)
+                entity.HasOne(c => c.Status)
                       .WithMany()
-                      .HasForeignKey(e => e.StatusId)
+                      .HasForeignKey(c => c.StatusId)
                       .OnDelete(DeleteBehavior.NoAction);
             });
         }

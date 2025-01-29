@@ -30,24 +30,5 @@ namespace BetManager.Application.Models.DTO
             Choice = choice;
             Odds = odds;
         }
-
-        public CreateCouponPositionDTO(
-            Guid couponId, 
-            DictionaryItemDTO status, 
-            DictionaryItemDTO discipline,
-            DictionaryItemDTO bettingType,
-            string description,
-            string choice,  
-            decimal odds
-        )
-        {
-            CouponId = couponId;
-            Discipline = discipline;
-            BettingType = bettingType;
-            Description = description;
-            Status = status;
-            Choice = choice;
-            Odds = odds;
-        }
     }
 }

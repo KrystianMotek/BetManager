@@ -11,47 +11,47 @@ namespace BetManager.Infrastructure.Database.Configurations
             {
                 entity.ToTable("CouponPositions");
 
-                entity.HasKey(e => e.Id);
+                entity.HasKey(p => p.Id);
 
-                entity.Property(e => e.Id)
+                entity.Property(p => p.Id)
                       .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.Description)
+                entity.Property(p => p.Description)
                       .IsRequired()
                       .HasMaxLength(120);
 
-                entity.Property(e => e.Choice)
+                entity.Property(p => p.Choice)
                       .IsRequired()
                       .HasMaxLength(40);
 
-                entity.Property(e => e.Odds)
+                entity.Property(p => p.Odds)
                       .IsRequired()
                       .HasPrecision(10, 2);
 
-                entity.Property(e => e.CreatedAt)
+                entity.Property(p => p.CreatedAt)
                       .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.ModifiedAt)
+                entity.Property(p => p.ModifiedAt)
                       .ValueGeneratedOnAdd();
 
-                entity.HasOne(e => e.Coupon)
+                entity.HasOne(p => p.Coupon)
                       .WithMany(c => c.Positions)
-                      .HasForeignKey(e => e.CouponId)
+                      .HasForeignKey(p => p.CouponId)
                       .OnDelete(DeleteBehavior.Cascade);
                 
-                entity.HasOne(e => e.Status)
+                entity.HasOne(p => p.Status)
                       .WithMany()
-                      .HasForeignKey(e => e.StatusId)
+                      .HasForeignKey(p => p.StatusId)
                       .OnDelete(DeleteBehavior.NoAction);
 
-                entity.HasOne(e => e.Discipline)
+                entity.HasOne(p => p.Discipline)
                       .WithMany()
-                      .HasForeignKey(e => e.DisciplineId)
+                      .HasForeignKey(p => p.DisciplineId)
                       .OnDelete(DeleteBehavior.NoAction);
 
-                entity.HasOne(e => e.BettingType)
+                entity.HasOne(p => p.BettingType)
                       .WithMany()
-                      .HasForeignKey(e => e.BettingTypeId)
+                      .HasForeignKey(p => p.BettingTypeId)
                       .OnDelete(DeleteBehavior.NoAction);
             });
         }

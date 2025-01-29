@@ -11,16 +11,16 @@ namespace BetManager.Infrastructure.Database.Configurations
             {
                 entity.ToTable("DictionaryItems");
 
-                entity.HasKey(e => e.Id);
+                entity.HasKey(d => d.Id);
 
-                entity.Property(e => e.Id)
+                entity.Property(d => d.Id)
                       .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.Scope)
+                entity.Property(d => d.Scope)
                       .IsRequired()
                       .HasMaxLength(60);
 
-                entity.Property(e => e.ItemValue)
+                entity.Property(d => d.ItemValue)
                       .IsRequired()
                       .HasMaxLength(60);
             });

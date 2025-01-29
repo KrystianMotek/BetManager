@@ -9,10 +9,10 @@ namespace BetManager.Infrastructure.Database.Repositories
         private readonly ApplicationDbContext _context = context;
 
         public async Task<DictionaryItem?> GetByIdAsync(Guid id)
-            => await _context.DictionaryItems.FirstOrDefaultAsync(e => e.Id == id);
+            => await _context.DictionaryItems.FirstOrDefaultAsync(d => d.Id == id);
 
         public async Task<DictionaryItem?> GetByScopeAndItemValueAsync(string scope, string itemValue)
-            => await _context.DictionaryItems.FirstOrDefaultAsync(e => e.Scope == scope && e.ItemValue == itemValue);
+            => await _context.DictionaryItems.FirstOrDefaultAsync(d => d.Scope == scope && d.ItemValue == itemValue);
         
         public async Task<DictionaryItem> CreateAsync(DictionaryItem dictionaryItem)
         {

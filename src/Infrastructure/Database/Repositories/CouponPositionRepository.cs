@@ -9,7 +9,10 @@ namespace BetManager.Infrastructure.Database.Repositories
         private readonly ApplicationDbContext _context = context;
 
         public async Task<CouponPosition?> GetByIdAsync(Guid id)
-            => await _context.CouponPositions.FirstOrDefaultAsync(e => e.Id == id);
+            => await _context.CouponPositions.FirstOrDefaultAsync(p => p.Id == id);
+
+        public async Task<CouponPosition?> GetByPositionNumberAsync(int positionNumber)
+            => await _context.CouponPositions.FirstOrDefaultAsync(p => p.PositionNumber == positionNumber);
         
         public async Task<CouponPosition> CreateAsync(CouponPosition couponPosition)
         {

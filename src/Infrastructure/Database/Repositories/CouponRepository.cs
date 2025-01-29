@@ -12,10 +12,10 @@ namespace BetManager.Infrastructure.Database.Repositories
             => await _context.Coupons.ToListAsync();
 
         public async Task<Coupon?> GetByIdAsync(Guid id)
-            => await _context.Coupons.FirstOrDefaultAsync(e => e.Id == id);      
+            => await _context.Coupons.FirstOrDefaultAsync(c => c.Id == id);      
 
         public async Task<Coupon?> GetByCouponNumberAsync(string couponNumber)  
-            => await _context.Coupons.FirstOrDefaultAsync(e => e.CouponNumber == couponNumber);
+            => await _context.Coupons.FirstOrDefaultAsync(c => c.CouponNumber == couponNumber);
 
         public async Task<Coupon> CreateAsync(Coupon coupon)
         {
