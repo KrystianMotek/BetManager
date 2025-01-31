@@ -16,6 +16,10 @@ namespace BetManager.Infrastructure.Database.Configurations
                 entity.Property(p => p.Id)
                       .ValueGeneratedOnAdd();
 
+                entity.Property(p => p.PositionNumber)
+                      .IsRequired()
+                      .UseIdentityColumn(1, 1);
+
                 entity.Property(p => p.Description)
                       .IsRequired()
                       .HasMaxLength(120);
