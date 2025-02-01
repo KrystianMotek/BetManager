@@ -2,7 +2,7 @@ using BetManager.Domain.Models;
 
 namespace BetManager.Application.Models.DTO
 {
-    public class UpdateCouponPositionWithCouponDTO : IDTO
+    public class UpdateCouponPositionDTO : IDTO
     {
         public int PositionNumber { get; set; }
         public DictionaryItemDTO Status { get; set; }
@@ -12,9 +12,9 @@ namespace BetManager.Application.Models.DTO
         public string Choice { get; set; }
         public decimal Odds { get; set; }
 
-        public UpdateCouponPositionWithCouponDTO() {}
+        public UpdateCouponPositionDTO() {}
 
-        public UpdateCouponPositionWithCouponDTO(
+        public UpdateCouponPositionDTO(
             int positionNumber,
             DictionaryItemDTO status, 
             DictionaryItemDTO discipline,
