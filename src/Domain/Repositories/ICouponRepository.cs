@@ -6,6 +6,7 @@ namespace BetManager.Domain.Repositories
     {
         Task<List<Coupon>> GetAllAsync();
         Task<Coupon?> GetByIdAsync(Guid id);
+        Task<List<Coupon>> GetInConclusionTimeRangeAsync(DateTime timeFrom, DateTime timeTo);
         Task<Coupon?> GetByCouponNumberAsync(string couponNumber);
         Task<Coupon> CreateAsync(Coupon coupon);
         Task<Coupon> UpdateAsync(Coupon coupon);

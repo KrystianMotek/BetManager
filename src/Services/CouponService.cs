@@ -22,9 +22,9 @@ namespace BetManager.Services
             _dictionaryItemRepository = dictionaryItemRepository;
         }
 
-        public async Task<List<Coupon>> GetCouponsAsync()
+        public async Task<List<Coupon>> GetCouponsInConclusionTimeRangeAsync(DateTime timeFrom, DateTime timeTo)
         {
-            return await _couponRepository.GetAllAsync();
+            return await _couponRepository.GetInConclusionTimeRangeAsync(timeFrom, timeTo);
         }
 
         public async Task<Coupon?> GetCouponByIdAsync(Guid id)
@@ -42,6 +42,18 @@ namespace BetManager.Services
             foreach (var position in coupon.Positions)
             {
                 await _couponPositionRepository.CreateAsync(position);
+            }
+
+            return coupon;
+        }
+
+        public async Task<Coupon> UpdateCouponAsync(Coupon coupon)
+        {
+            await _couponRepository.UpdateAsync(coupon);
+
+            foreach (var position in coupon.Positions)
+            {
+                await _couponPositionRepository.UpdateAsync(position);
             }
 
             return coupon;

@@ -14,6 +14,11 @@ namespace BetManager.Infrastructure.Database.Repositories
         public async Task<Coupon?> GetByIdAsync(Guid id)
             => await _context.Coupons.FirstOrDefaultAsync(c => c.Id == id);      
 
+        public async Task<List<Coupon>> GetInConclusionTimeRangeAsync(DateTime timeFrom, DateTime timeTo)
+            => await _context.Coupons
+                .Where(c => c.ConclusionTime >= timeFrom && c.ConclusionTime <= timeTo)
+                .ToListAsync();
+
         public async Task<Coupon?> GetByCouponNumberAsync(string couponNumber)  
             => await _context.Coupons.FirstOrDefaultAsync(c => c.CouponNumber == couponNumber);
 
