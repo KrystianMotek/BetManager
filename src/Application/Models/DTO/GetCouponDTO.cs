@@ -2,13 +2,13 @@ using BetManager.Domain.Models;
 
 namespace BetManager.Application.Models.DTO
 {
-    public class CouponDTO : IDTO
+    public class GetCouponDTO : IDTO
     {
         public Guid Id { get; set; }
         public string CouponNumber { get; set; }
         public DictionaryItemDTO Status { get; set; }
         public DictionaryItemDTO CouponType { get; set; }
-        public List<CouponPositionDTO> Positions { get; set; }
+        public List<GetCouponPositionDTO> Positions { get; set; }
         public DateTime ConclusionTime { get; set; }
         public decimal PossibleProfit { get; set; }
         public decimal TotalOdds { get; set; }
@@ -16,14 +16,14 @@ namespace BetManager.Application.Models.DTO
         public decimal TaxRate { get; set; }
         public decimal Stake { get; set; }
 
-        public CouponDTO() {}
+        public GetCouponDTO() {}
 
-        public CouponDTO(
+        public GetCouponDTO(
             Guid id,
             string couponNumber,
             DictionaryItemDTO status,
             DictionaryItemDTO couponType,
-            List<UpdateCouponPositionDTO> positions,
+            List<GetCouponPositionDTO> positions,
             DateTime conclusionTime,
             decimal possibleProfit,
             decimal totalOdds,
