@@ -4,10 +4,9 @@ namespace BetManager.Application.Models.DTO
 {
     public class CreateCouponDTO : IDTO
     {
+        public string Status { get; set; }
+        public string CouponType { get; set; }
         public string CouponNumber { get; set; }
-        public DictionaryItemDTO Status { get; set; }
-        public DictionaryItemDTO CouponType { get; set; }
-        public List<CreateCouponPositionDTO> Positions { get; set; }
         public DateTime ConclusionTime { get; set; }
         public decimal PossibleProfit { get; set; }
         public decimal TotalOdds { get; set; }
@@ -15,12 +14,14 @@ namespace BetManager.Application.Models.DTO
         public decimal TaxRate { get; set; }
         public decimal Stake { get; set; }
 
+        public List<CreateCouponPositionDTO> Positions { get; set; }
+
         public CreateCouponDTO() {}
 
         public CreateCouponDTO(
+            string status,
+            string couponType,
             string couponNumber,
-            DictionaryItemDTO status,
-            DictionaryItemDTO couponType,
             List<CreateCouponPositionDTO> positions,
             DateTime conclusionTime,
             decimal possibleProfit,

@@ -4,23 +4,24 @@ namespace BetManager.Application.Models.DTO
 {
     public class UpdateCouponDTO : IDTO
     {
+        public string Status { get; set; }
+        public string CouponType { get; set; }
         public string CouponNumber { get; set; }
-        public DictionaryItemDTO Status { get; set; }
-        public DictionaryItemDTO CouponType { get; set; }
-        public List<UpdateCouponPositionDTO> Positions { get; set; }
         public DateTime ConclusionTime { get; set; }
         public decimal PossibleProfit { get; set; }
-        public decimal TotalOdds { get; set; }
+        public decimal TotalOdds { get; set; } 
         public decimal TaxAmount { get; set; }
         public decimal TaxRate { get; set; }
         public decimal Stake { get; set; }
 
+        public List<UpdateCouponPositionDTO> Positions { get; set; }
+
         public UpdateCouponDTO() {}
 
         public UpdateCouponDTO(
+            string status,
+            string couponType,
             string couponNumber,
-            DictionaryItemDTO status,
-            DictionaryItemDTO couponType,
             List<UpdateCouponPositionDTO> positions,
             DateTime conclusionTime,
             decimal possibleProfit,

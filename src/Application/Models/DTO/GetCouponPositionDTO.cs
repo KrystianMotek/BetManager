@@ -5,10 +5,10 @@ namespace BetManager.Application.Models.DTO
     public class GetCouponPositionDTO : IDTO
     {
         public Guid Id { get; set; }
+        public string Status { get; set; }
+        public string Discipline { get; set; }
+        public string BettingType { get; set; }
         public int PositionNumber { get; set; }
-        public DictionaryItemDTO Status { get; set; }
-        public DictionaryItemDTO Discipline { get; set; }
-        public DictionaryItemDTO BettingType { get; set; }
         public string Description { get; set; }
         public string Choice { get; set; } 
         public decimal Odds { get; set; }
@@ -17,10 +17,10 @@ namespace BetManager.Application.Models.DTO
 
         public GetCouponPositionDTO(
             Guid id,
+            string status, 
+            string discipline,
+            string bettingType,
             int positionNumber,
-            DictionaryItemDTO status, 
-            DictionaryItemDTO discipline,
-            DictionaryItemDTO bettingType,
             string description,
             string choice,  
             decimal odds

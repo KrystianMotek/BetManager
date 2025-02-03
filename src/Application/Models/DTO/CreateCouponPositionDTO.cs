@@ -4,9 +4,9 @@ namespace BetManager.Application.Models.DTO
 {
     public class CreateCouponPositionDTO : IDTO
     {
-        public DictionaryItemDTO Status { get; set; }
-        public DictionaryItemDTO Discipline { get; set; }
-        public DictionaryItemDTO BettingType { get; set; }
+        public string Status { get; set; }
+        public string Discipline { get; set; }
+        public string BettingType { get; set; }
         public string Description { get; set; }
         public string Choice { get; set; } 
         public decimal Odds { get; set; }
@@ -14,9 +14,9 @@ namespace BetManager.Application.Models.DTO
         public CreateCouponPositionDTO() {}
 
         public CreateCouponPositionDTO(
-            DictionaryItemDTO status, 
-            DictionaryItemDTO discipline,
-            DictionaryItemDTO bettingType,
+            string status, 
+            string discipline,
+            string bettingType,
             string description,
             string choice,  
             decimal odds
