@@ -33,11 +33,11 @@ namespace BetManager.Application.Models.DTO
         {
             Status = status;
             Positions = positions;
+            TotalOdds = totalOdds;
             CouponType = couponType;
             CouponNumber = couponNumber;
             ConclusionTime = conclusionTime;
             PossibleProfit = possibleProfit;
-            TotalOdds = totalOdds;
             TaxAmount = taxAmount;
             TaxRate = taxRate;
             Stake = stake;
