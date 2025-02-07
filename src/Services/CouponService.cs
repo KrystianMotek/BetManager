@@ -1,6 +1,8 @@
+using System.Reflection;
 using BetManager.Domain.Models;
 using BetManager.Domain.Services;
-using BetManager.Domain.Repositories;   
+using BetManager.Domain.Repositories;
+using BetManager.Application.Models.DTO;   
 using BetManager.Infrastructure.Database.Repositories;
 
 namespace BetManager.Services

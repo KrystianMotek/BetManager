@@ -11,7 +11,7 @@ namespace BetManager.Infrastructure.Database.Repositories
         public async Task<DictionaryItem?> GetByIdAsync(Guid id)
             => await _context.DictionaryItems.FirstOrDefaultAsync(d => d.Id == id);
 
-        public async Task<List<DictionaryItem>> GetUniqueScopesAsync()
+        public async Task<List<string>> GetUniqueScopesAsync()
             => _context.DictionaryItem.Select(d => d.Scope).Distinct();
 
         public async Task<DictionaryItem?> GetByScopeAndItemValueAsync(string scope, string itemValue)

@@ -4,7 +4,6 @@ namespace BetManager.Domain.Repositories
 {
     public interface ICouponRepository
     {
-        Task<List<Coupon>> GetAllAsync();
         Task<Coupon?> GetByIdAsync(Guid id);
         Task<List<Coupon>> GetInConclusionTimeRangeAsync(DateTime timeFrom, DateTime timeTo);
         Task<Coupon?> GetByCouponNumberAsync(string couponNumber);

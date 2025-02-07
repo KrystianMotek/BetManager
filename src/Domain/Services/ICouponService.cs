@@ -1,4 +1,5 @@
 using BetManager.Domain.Models;
+using BetManager.Application.Models.DTO;
 
 namespace BetManager.Domain.Services
 {
