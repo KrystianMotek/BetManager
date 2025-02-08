@@ -4,8 +4,10 @@ using namespace BetManager.Application.Models.Mappers
 {   
     public interface ICouponMapper
     {
-        public Coupon MapCoupon<T>(T dto);
-        public CouponPosition MapCouponPosition<T>(T dto);
+        public Coupon MapToCoupon<T>(T dto);
+        public CouponPosition MapToCouponPosition<T>(T dto);
+        public GetCouponDTO MapCouponToDTO(Coupon coupon);
+        public GetCouponPositionDTO MapCouponPositionToDTO(CouponPosition couponPosition);
         private void MapProperties<TSource, TDestination>(TSource source, TDestination destination);
     }
 }

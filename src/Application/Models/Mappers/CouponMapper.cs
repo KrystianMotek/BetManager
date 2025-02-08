@@ -1,51 +1,50 @@
 using BetManager.Domain.Models;
-using BetManager.Infrastructure.Database;
+using BetManager.Infrastructure.Database.Repositories;
 
 namespace BetManager.Application.Models.Mappers
 {
-    public Coupon MapCoupon<T>(T dto)
+    public class CouponMapper : ICouponMapper 
     {
-        var coupon = new Coupon
+        private readonly IDictionaryItemRepository _dictionaryItemRepository;
+        
+        public CouponMapper(IDictionaryItemRepository dictionaryItemRepository)
         {
-            Positions = dto.Positions?
-                .Select(MapCouponPosition)
-                .ToList()
-        };
-
-        var dictionaryScopes = _dictionaryItemRepository.GetUniqueScopes();  
-
-        foreach (var property in typeof(CreateCouponDTO).GetProperties()
-                .Where(p => typeof(Coupon).GetProperty(p.Name)?.CanWrite == true))
-        {
-            if (property.Name == "Positions")
-                continue;
-            
-            var value = dictionaryScopes.Contains(property.Name)
-                ? _dictionaryItemRepository.GetByScopeAndItemValue(property.Name, property.GetValue(dto))
-                : property.GetValue(dto);
-            
-            typeof(Coupon).GetProperty(property.Name)?.SetValue(coupon, value);
+            _dictionaryItemRepository = dictionaryItemRepository;
         }
 
-        return coupon;
+        public Coupon MapToCoupon<T>(T dto)
+        {
+
+        }
+
+        public CouponPosition MapToCouponPosition<T>(T dto)
+        {
+            
+        }    
+
+        public GetCouponDTO MapCouponToDTO(Coupon coupon)
+        {
+
+        }
+
+        public GetCouponPositionDTO MapCouponPositionToDTO(CouponPosition couponPosition)
+        {
+            
+        }
+
+        private void MapProperties<TSource, TDestination>(TSource source, TDestination destination)
+        {
+            var dictionaryScopes = _dictionaryItemRepository.GetUniqueScopes();
+
+            foreach (var property in typeof(source).GetProperties()
+                    .Where(p => typeof(destination).GetProperty(p.Name)?.CanWrite == true))
+            {
+                var value = dictionaryScopes.Contains(property.Name)
+                    ? _dictionaryItemRepository.GetByScopeAndItemValue(property.Name, property.GetValue(source))
+                    : property.GetValue(source);
+                
+                typeof(destination).GetProperty(property.Name)?.SetValue(destination, value);
+            }
+        }
     }
-
-    public CouponPosition MapCouponPosition<T>(T dto)
-    {
-        var couponPosition = new CouponPosition();
-
-        var dictionaryScopes = _dictionaryItemRepository.GetUniqueScopes();  
-
-        foreach (var property in typeof(CreateCouponPositionDTO).GetProperties()
-                .Where(p => typeof(CouponPosition).GetProperty(p.Name)?.CanWrite == true))
-        {
-            var value = dictionaryScopes.Contains(property.Name)
-                ? _dictionaryItemRepository.GetByScopeAndItemValue(property.Name, property.GetValue(dto))
-                : property.GetValue(dto);
-            
-            typeof(CouponPosition).GetProperty(property.Name)?.SetValue(couponPosition, value);
-        }
-
-        return couponPosition;
-    }    
 }
