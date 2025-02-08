@@ -11,7 +11,7 @@ namespace BetManager.Application.Models.Mappers
             where T : ICouponPositionDTO;
         Task<TDestination> MapPropertiesAsync<TSource, TDestination>(TSource source)
             where TDestination : new();
-        GetCouponDTO MapFromCoupon(Coupon coupon);
-        GetCouponPositionDTO MapFromCouponPosition(CouponPosition couponPosition);
+        Task<GetCouponDTO> MapFromCouponAsync(Coupon coupon);
+        Task<GetCouponPositionDTO> MapFromCouponPositionAsync(CouponPosition couponPosition);
     }
 }

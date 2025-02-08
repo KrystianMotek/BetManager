@@ -53,7 +53,7 @@ namespace BetManager.Application.Models.Mappers
             return destination;
         }
 
-        public GetCouponDTO MapFromCoupon(Coupon coupon)
+        public async Task<GetCouponDTO> MapFromCouponAsync(Coupon coupon)
         {
             var dto = new GetCouponDTO();
 
@@ -74,13 +74,13 @@ namespace BetManager.Application.Models.Mappers
 
             foreach (var position in coupon.Positions)
             {
-                dto.Positions.Add(MapFromCouponPosition(position));
+                dto.Positions.Add(await MapFromCouponPositionAsync(position));
             }
 
             return dto;
         }
 
-        public GetCouponPositionDTO MapFromCouponPosition(CouponPosition couponPosition)
+        public async Task<GetCouponPositionDTO> MapFromCouponPositionAsync(CouponPosition couponPosition)
         {
             var dto = new GetCouponPositionDTO();
 
