@@ -1,13 +1,17 @@
 using BetManager.Domain.Models;
+using BetManager.Application.Models.DTO;
 
-using namespace BetManager.Application.Models.Mappers
+namespace BetManager.Application.Models.Mappers
 {   
     public interface ICouponMapper
     {
-        public Coupon MapToCoupon<T>(T dto);
-        public CouponPosition MapToCouponPosition<T>(T dto);
-        public GetCouponDTO MapCouponToDTO(Coupon coupon);
-        public GetCouponPositionDTO MapCouponPositionToDTO(CouponPosition couponPosition);
-        private void MapProperties<TSource, TDestination>(TSource source, TDestination destination);
+        public Task<Coupon> MapToCouponAsync<T, TCouponPositionDTO>(T dto) 
+            where T : ICouponDTO<TCouponPositionDTO>;
+
+        public Task<CouponPosition> MapToCouponPositionAsync<T>(T dto)
+            where T : ICouponPositionDTO;
+
+        public Task<TDestination> MapPropertiesAsync<TSource, TDestination>(TSource source)
+            where TDestination : new();
     }
 }

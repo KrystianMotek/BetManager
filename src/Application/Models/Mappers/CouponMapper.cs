@@ -1,6 +1,6 @@
 using BetManager.Domain.Models;
-using BetManager.Infrastructure.Database.Repositories;
-
+using BetManager.Domain.Repositories;
+using BetManager.Application.Models.DTO;
 namespace BetManager.Application.Models.Mappers
 {
     public class CouponMapper : ICouponMapper 
@@ -12,39 +12,45 @@ namespace BetManager.Application.Models.Mappers
             _dictionaryItemRepository = dictionaryItemRepository;
         }
 
-        public Coupon MapToCoupon<T>(T dto)
-        {
+        public async Task<Coupon> MapToCouponAsync<T, TCouponPositionDTO>(T dto)
+            where T : ICouponDTO<TCouponPositionDTO> 
+        {   
+            var coupon = await MapPropertiesAsync<T, Coupon>(dto);
 
+            foreach (var dtoPosition in dto.Positions)
+            {
+                var position = await MapPropertiesAsync<TCouponPositionDTO, CouponPosition>(dtoPosition);
+                
+                coupon.Positions.Add(position);
+            }
+
+            return coupon;
         }
 
-        public CouponPosition MapToCouponPosition<T>(T dto)
-        {
-            
+        public async Task<CouponPosition> MapToCouponPositionAsync<T>(T dto) 
+            where T : ICouponPositionDTO
+        {   
+            return await MapPropertiesAsync<T, CouponPosition>(dto);
         }    
 
-        public GetCouponDTO MapCouponToDTO(Coupon coupon)
+        public async Task<TDestination> MapPropertiesAsync<TSource, TDestination>(TSource source) 
+            where TDestination : new() 
         {
+            var destination = new TDestination();
 
-        }
+            var dictionaryScopes = await _dictionaryItemRepository.GetUniqueScopesAsync();
 
-        public GetCouponPositionDTO MapCouponPositionToDTO(CouponPosition couponPosition)
-        {
-            
-        }
-
-        private void MapProperties<TSource, TDestination>(TSource source, TDestination destination)
-        {
-            var dictionaryScopes = _dictionaryItemRepository.GetUniqueScopes();
-
-            foreach (var property in typeof(source).GetProperties()
-                    .Where(p => typeof(destination).GetProperty(p.Name)?.CanWrite == true))
+            foreach (var property in typeof(TSource).GetProperties()
+                    .Where(p => p.Name != "Positions" && typeof(TDestination).GetProperty(p.Name)?.CanWrite == true))
             {
                 var value = dictionaryScopes.Contains(property.Name)
-                    ? _dictionaryItemRepository.GetByScopeAndItemValue(property.Name, property.GetValue(source))
+                    ? _dictionaryItemRepository.GetByScopeAndItemValueAsync(property.Name, property.GetValue(source).ToString())
                     : property.GetValue(source);
                 
-                typeof(destination).GetProperty(property.Name)?.SetValue(destination, value);
+                typeof(TDestination).GetProperty(property.Name)?.SetValue(destination, value);
             }
+
+            return destination;
         }
     }
 }

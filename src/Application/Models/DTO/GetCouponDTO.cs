@@ -2,7 +2,7 @@ using BetManager.Domain.Models;
 
 namespace BetManager.Application.Models.DTO
 {
-    public class GetCouponDTO : IDTO
+    public class GetCouponDTO : ICouponDTO<GetCouponPositionDTO>
     {
         public Guid Id { get; set; }
         public string Status { get; set; }

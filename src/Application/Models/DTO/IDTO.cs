@@ -1,4 +1,4 @@
 namespace BetManager.Application.Models.DTO
 {
-    public interface IDTO {}
+    public interface IDTO {}    
 }
