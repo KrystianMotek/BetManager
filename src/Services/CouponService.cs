@@ -39,7 +39,10 @@ namespace BetManager.Services
 
         public async Task<DictionaryItem?> GetDictionaryItemByScopeAndValueAsync(string scope, string value)
         {
-            return await _dictionaryItemRepository.GetByScopeAndItemValueAsync(scope, value);
+            var dictionaryItem = await _dictionaryItemRepository.GetByScopeAndItemValueAsync(scope, value)
+                ?? throw new KeyNotFoundException("no matching dictionary object");
+
+            return dictionaryItem;
         }
 
         public async Task<List<Coupon>> GetCouponsInConclusionTimeRangeAsync(DateTime timeFrom, DateTime timeTo)
