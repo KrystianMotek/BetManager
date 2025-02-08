@@ -17,30 +17,5 @@ namespace BetManager.Application.Models.DTO
         public List<CreateCouponPositionDTO> Positions { get; set; }
 
         public CreateCouponDTO() {}
-
-        public CreateCouponDTO(
-            string status,
-            string couponType,
-            string couponNumber,
-            List<CreateCouponPositionDTO> positions,
-            DateTime conclusionTime,
-            decimal possibleProfit,
-            decimal totalOdds,
-            decimal taxAmount,
-            decimal taxRate,
-            decimal stake
-        )
-        {
-            Status = status;
-            Positions = positions;
-            TotalOdds = totalOdds;
-            CouponType = couponType;
-            CouponNumber = couponNumber;
-            ConclusionTime = conclusionTime;
-            PossibleProfit = possibleProfit;
-            TaxAmount = taxAmount;
-            TaxRate = taxRate;
-            Stake = stake;
-        }
     }
 }

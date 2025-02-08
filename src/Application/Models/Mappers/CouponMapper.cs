@@ -21,7 +21,6 @@ namespace BetManager.Application.Models.Mappers
             foreach (var dtoPosition in dto.Positions)
             {
                 var position = await MapPropertiesAsync<TCouponPositionDTO, CouponPosition>(dtoPosition);
-                
                 coupon.Positions.Add(position);
             }
 
@@ -52,6 +51,51 @@ namespace BetManager.Application.Models.Mappers
             }
 
             return destination;
+        }
+
+        public GetCouponDTO MapFromCoupon(Coupon coupon)
+        {
+            var dto = new GetCouponDTO();
+
+            dto.Id = coupon.Id;
+            dto.Status = coupon.Status.ItemValue;
+            dto.CouponType = coupon.CouponType.ItemValue;
+            dto.CouponNumber = coupon.CouponNumber;
+            dto.ConclusionTime = coupon.ConclusionTime;
+            dto.PossibleProfit = coupon.PossibleProfit;
+            dto.TotalOdds = coupon.TotalOdds;
+            dto.TaxAmount = coupon.TaxAmount;
+            dto.TaxRate = coupon.TaxRate;
+            dto.Stake = coupon.Stake;
+            dto.CreatedAt = coupon.CreatedAt;
+            dto.ModifiedAt = coupon.ModifiedAt;
+
+            dto.Positions = new List<GetCouponPositionDTO> ();
+
+            foreach (var position in coupon.Positions)
+            {
+                dto.Positions.Add(MapFromCouponPosition(position));
+            }
+
+            return dto;
+        }
+
+        public GetCouponPositionDTO MapFromCouponPosition(CouponPosition couponPosition)
+        {
+            var dto = new GetCouponPositionDTO();
+
+            dto.Id = couponPosition.Id;
+            dto.Status = couponPosition.Status.ItemValue;
+            dto.Discipline = couponPosition.Discipline.ItemValue;
+            dto.BettingType = couponPosition.BettingType.ItemValue;
+            dto.PositionNumber = couponPosition.PositionNumber;
+            dto.Description = couponPosition.Description;
+            dto.Choice = couponPosition.Choice;
+            dto.Odds = couponPosition.Odds;
+            dto.CreatedAt = couponPosition.CreatedAt;
+            dto.ModifiedAt = couponPosition.ModifiedAt;
+
+            return dto;
         }
     }
 }

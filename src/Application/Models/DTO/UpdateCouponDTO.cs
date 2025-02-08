@@ -17,30 +17,5 @@ namespace BetManager.Application.Models.DTO
         public List<UpdateCouponPositionDTO> Positions { get; set; }
 
         public UpdateCouponDTO() {}
-
-        public UpdateCouponDTO(
-            string status,
-            string couponType,
-            string couponNumber,
-            List<UpdateCouponPositionDTO> positions,
-            DateTime conclusionTime,
-            decimal possibleProfit,
-            decimal totalOdds,
-            decimal taxAmount,
-            decimal taxRate,
-            decimal stake
-        )
-        {
-            Status = status;
-            Positions = positions;
-            TotalOdds = totalOdds;
-            CouponType = couponType;
-            CouponNumber = couponNumber;
-            ConclusionTime = conclusionTime;
-            PossibleProfit = possibleProfit;
-            TaxAmount = taxAmount;
-            TaxRate = taxRate;
-            Stake = stake;
-        }
     }
 }

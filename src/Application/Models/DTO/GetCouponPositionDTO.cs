@@ -12,28 +12,9 @@ namespace BetManager.Application.Models.DTO
         public string Description { get; set; }
         public string Choice { get; set; } 
         public decimal Odds { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime ModifiedAt { get; set; }
 
         public GetCouponPositionDTO() {}
-
-        public GetCouponPositionDTO(
-            Guid id,
-            string status, 
-            string discipline,
-            string bettingType,
-            int positionNumber,
-            string description,
-            string choice,  
-            decimal odds
-        )
-        {
-            Id = id;
-            Discipline = discipline;
-            BettingType = bettingType;
-            Description = description;
-            PositionNumber = positionNumber;
-            Status = status;
-            Choice = choice;
-            Odds = odds;
-        }
     }
 }
