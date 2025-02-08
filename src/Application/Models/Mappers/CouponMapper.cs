@@ -1,15 +1,16 @@
 using BetManager.Domain.Models;
-using BetManager.Domain.Repositories;
+using BetManager.Domain.Services;
 using BetManager.Application.Models.DTO;
+
 namespace BetManager.Application.Models.Mappers
 {
     public class CouponMapper : ICouponMapper 
     {
-        private readonly IDictionaryItemRepository _dictionaryItemRepository;
+        private readonly ICouponService _couponService;
         
-        public CouponMapper(IDictionaryItemRepository dictionaryItemRepository)
+        public CouponMapper(ICouponService couponService)
         {
-            _dictionaryItemRepository = dictionaryItemRepository;
+            _couponService = couponService;
         }
 
         public async Task<Coupon> MapToCouponAsync<T, TCouponPositionDTO>(T dto)
@@ -38,13 +39,13 @@ namespace BetManager.Application.Models.Mappers
         {
             var destination = new TDestination();
 
-            var dictionaryScopes = await _dictionaryItemRepository.GetUniqueScopesAsync();
+            var dictionaryScopes = await _couponService.GetUniqueDictionaryScopesAsync();
 
             foreach (var property in typeof(TSource).GetProperties()
                     .Where(p => p.Name != "Positions" && typeof(TDestination).GetProperty(p.Name)?.CanWrite == true))
             {
                 var value = dictionaryScopes.Contains(property.Name)
-                    ? _dictionaryItemRepository.GetByScopeAndItemValueAsync(property.Name, property.GetValue(source).ToString())
+                    ? _couponService.GetDictionaryItemByScopeAndValueAsync(property.Name, property.GetValue(source).ToString())
                     : property.GetValue(source);
                 
                 typeof(TDestination).GetProperty(property.Name)?.SetValue(destination, value);

@@ -24,17 +24,27 @@ namespace BetManager.Services
             _dictionaryItemRepository = dictionaryItemRepository;
         }
 
-        public async Task<List<Coupon>> GetCouponsInConclusionTimeRangeAsync(DateTime timeFrom, DateTime timeTo)
-        {
-            return await _couponRepository.GetInConclusionTimeRangeAsync(timeFrom, timeTo);
-        }
-
         public async Task<Coupon?> GetCouponByIdAsync(Guid id)
         {
             var coupon = await _couponRepository.GetByIdAsync(id) 
                 ?? throw new KeyNotFoundException("coupon not found");
 
             return coupon;
+        }
+
+        public async Task<List<string>> GetUniqueDictionaryScopesAsync()
+        {
+            return await _dictionaryItemRepository.GetUniqueScopesAsync();
+        }
+
+        public async Task<DictionaryItem?> GetDictionaryItemByScopeAndValueAsync(string scope, string value)
+        {
+            return await _dictionaryItemRepository.GetByScopeAndItemValueAsync(scope, value);
+        }
+
+        public async Task<List<Coupon>> GetCouponsInConclusionTimeRangeAsync(DateTime timeFrom, DateTime timeTo)
+        {
+            return await _couponRepository.GetInConclusionTimeRangeAsync(timeFrom, timeTo);
         }
 
         public async Task<Coupon> CreateCouponAsync(Coupon coupon)
