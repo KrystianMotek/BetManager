@@ -53,24 +53,12 @@ namespace BetManager.Services
         public async Task<Coupon> CreateCouponAsync(Coupon coupon)
         {
             await _couponRepository.CreateAsync(coupon);
-
-            foreach (var position in coupon.Positions)
-            {
-                await _couponPositionRepository.CreateAsync(position);
-            }
-
             return coupon;
         }
 
         public async Task<Coupon> UpdateCouponAsync(Coupon coupon)
         {
             await _couponRepository.UpdateAsync(coupon);
-
-            foreach (var position in coupon.Positions)
-            {
-                await _couponPositionRepository.UpdateAsync(position);
-            }
-
             return coupon;
         }
 

@@ -18,6 +18,8 @@ namespace BetManager.Application.Models.Mappers
         {   
             var coupon = await MapPropertiesAsync<T, Coupon>(dto);
 
+            coupon.Positions = new List<CouponPosition>();
+
             foreach (var dtoPosition in dto.Positions)
             {
                 var position = await MapPropertiesAsync<TCouponPositionDTO, CouponPosition>(dtoPosition);
@@ -44,7 +46,7 @@ namespace BetManager.Application.Models.Mappers
                     .Where(p => p.Name != "Positions" && typeof(TDestination).GetProperty(p.Name)?.CanWrite == true))
             {
                 var value = dictionaryScopes.Contains(property.Name)
-                    ? _couponService.GetDictionaryItemByScopeAndValueAsync(property.Name, property.GetValue(source).ToString())
+                    ? await _couponService.GetDictionaryItemByScopeAndValueAsync(property.Name, property.GetValue(source).ToString())
                     : property.GetValue(source);
                 
                 typeof(TDestination).GetProperty(property.Name)?.SetValue(destination, value);
