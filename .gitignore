@@ -1,11 +1,5 @@
 bin/*
 obj/*
-Migrations/*
-src/.vscode/*
-appsettings.json
-src/Application/obj/*
-src/Application/Properties/*
-src/Application/appsettings.json
-src/Application/local.settings.json
-BetManager.csproj
-Program.cs
+Properties/*
+local.settings.json
+.vscode/*
