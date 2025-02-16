@@ -1,6 +1,6 @@
 using System.Text.Json;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
 using BetManager.Domain.Services;
 using Microsoft.Azure.Functions.Worker;
 using BetManager.Application.Models.DTO;
@@ -13,14 +13,17 @@ namespace BetManager.Application.Functions
     {
         private readonly ICouponMapper _couponMapper;
         private readonly ICouponService _couponService;
+        private readonly IValidator<CreateCouponDTO> _validator;
 
         public CreateCouponFunction(
             ICouponMapper couponMapper, 
-            ICouponService couponService
+            ICouponService couponService,
+            IValidator<CreateCouponDTO> validator
         )
         {
             _couponMapper = couponMapper;
             _couponService = couponService;
+            _validator = validator;
         }
 
         [Function("CreateCoupon")]
@@ -28,16 +31,29 @@ namespace BetManager.Application.Functions
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route="coupons")] HttpRequestData requestData,
             FunctionContext functionContext
         )
-        {
-            var requestBody = await new StreamReader(requestData.Body).ReadToEndAsync(); 
+        {            
+            CreateCouponDTO? dto;
+            try
+            {
+                dto = await JsonSerializer.DeserializeAsync<CreateCouponDTO>(requestData.Body)
+                    ?? throw new JsonException("deserialization returned null");
+            }
+            catch (JsonException)
+            {
+                return new BadRequestObjectResult("invalid JSON format");
+            }
 
-            CreateCouponDTO dto = JsonSerializer.Deserialize<CreateCouponDTO>(requestBody);
+            var validationResult = await _validator.ValidateAsync(dto);
+            if (!validationResult.IsValid)
+            {
+                return new BadRequestObjectResult(validationResult.ToDictionary());
+            }
 
             var coupon = await _couponMapper.MapToCouponAsync<CreateCouponDTO, CreateCouponPositionDTO>(dto);
 
             await _couponService.CreateCouponAsync(coupon);
 
-            return new OkResult();
+            return new OkObjectResult(new { message = "coupon created successfully" });
         }
     }
 }
