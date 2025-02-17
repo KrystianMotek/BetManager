@@ -18,12 +18,14 @@ namespace BetManager.Application.Models.Mappers
         {   
             var coupon = await MapPropertiesAsync<T, Coupon>(dto);
 
-            coupon.Positions = new List<CouponPosition>();
-
-            foreach (var dtoPosition in dto.Positions)
+            if (dto.Positions != null)
             {
-                var position = await MapPropertiesAsync<TCouponPositionDTO, CouponPosition>(dtoPosition);
-                coupon.Positions.Add(position);
+                coupon.Positions = new List<CouponPosition>();
+                foreach (var dtoPosition in dto.Positions)
+                {
+                    var position = await MapPropertiesAsync<TCouponPositionDTO, CouponPosition>(dtoPosition);
+                    coupon.Positions.Add(position);
+                }
             }
 
             return coupon;
@@ -39,63 +41,77 @@ namespace BetManager.Application.Models.Mappers
             where TDestination : new() 
         {
             var destination = new TDestination();
-
+            var destinationType = typeof(TDestination);
             var dictionaryScopes = await _couponService.GetUniqueDictionaryScopesAsync();
 
             foreach (var property in typeof(TSource).GetProperties()
-                    .Where(p => p.Name != "Positions" && typeof(TDestination).GetProperty(p.Name)?.CanWrite == true))
+                    .Where(p => p.Name != "Positions" && destinationType.GetProperty(p.Name)?.CanWrite == true))
             {
-                var value = dictionaryScopes.Contains(property.Name)
-                    ? await _couponService.GetDictionaryItemByScopeAndValueAsync(property.Name, property.GetValue(source).ToString())
-                    : property.GetValue(source);
+                var sourceValue = property.GetValue(source);
+
+                var destinationValue = dictionaryScopes.Contains(property.Name)
+                    ? await _couponService.GetDictionaryItemByScopeAndValueAsync(property.Name, sourceValue?.ToString() ?? string.Empty)
+                    : sourceValue;
                 
-                typeof(TDestination).GetProperty(property.Name)?.SetValue(destination, value);
+                destinationType.GetProperty(property.Name)?.SetValue(destination, destinationValue);
             }
 
             return destination;
         }
 
-        public async Task<GetCouponDTO> MapFromCouponAsync(Coupon coupon)
+        public GetCouponDTO MapFromCoupon(Coupon coupon)
         {
             var dto = new GetCouponDTO();
 
             dto.Id = coupon.Id;
-            dto.Status = coupon.Status.ItemValue;
-            dto.CouponType = coupon.CouponType.ItemValue;
-            dto.CouponNumber = coupon.CouponNumber;
+            dto.CreatedAt = coupon.CreatedAt;
+            dto.ModifiedAt = coupon.ModifiedAt;
             dto.ConclusionTime = coupon.ConclusionTime;
             dto.PossibleProfit = coupon.PossibleProfit;
             dto.TotalOdds = coupon.TotalOdds;
             dto.TaxAmount = coupon.TaxAmount;
             dto.TaxRate = coupon.TaxRate;
             dto.Stake = coupon.Stake;
-            dto.CreatedAt = coupon.CreatedAt;
-            dto.ModifiedAt = coupon.ModifiedAt;
 
-            dto.Positions = new List<GetCouponPositionDTO> ();
+            dto.Status = coupon.Status?.ItemValue
+                ?? string.Empty;
+            dto.CouponType = coupon.CouponType?.ItemValue
+                ?? string.Empty;
+            dto.CouponNumber = coupon.CouponNumber
+                ?? string.Empty;
 
-            foreach (var position in coupon.Positions)
+            if (coupon.Positions != null)
             {
-                dto.Positions.Add(await MapFromCouponPositionAsync(position));
+                dto.Positions = new List<GetCouponPositionDTO>();
+                foreach (var position in coupon.Positions)
+                {
+                    dto.Positions.Add(MapFromCouponPosition(position));
+                }
             }
 
             return dto;
         }
 
-        public async Task<GetCouponPositionDTO> MapFromCouponPositionAsync(CouponPosition couponPosition)
+        public GetCouponPositionDTO MapFromCouponPosition(CouponPosition couponPosition)
         {
             var dto = new GetCouponPositionDTO();
 
             dto.Id = couponPosition.Id;
-            dto.Status = couponPosition.Status.ItemValue;
-            dto.Discipline = couponPosition.Discipline.ItemValue;
-            dto.BettingType = couponPosition.BettingType.ItemValue;
             dto.PositionNumber = couponPosition.PositionNumber;
-            dto.Description = couponPosition.Description;
-            dto.Choice = couponPosition.Choice;
-            dto.Odds = couponPosition.Odds;
-            dto.CreatedAt = couponPosition.CreatedAt;
             dto.ModifiedAt = couponPosition.ModifiedAt;
+            dto.CreatedAt = couponPosition.CreatedAt;
+            dto.Odds = couponPosition.Odds;
+
+            dto.Status = couponPosition.Status?.ItemValue 
+                ?? string.Empty;
+            dto.Discipline = couponPosition.Discipline?.ItemValue
+                ?? string.Empty;
+            dto.BettingType = couponPosition.BettingType?.ItemValue
+                ?? string.Empty;
+            dto.Description = couponPosition.Description 
+                ?? string.Empty;
+            dto.Choice = couponPosition.Choice 
+                ?? string.Empty;
 
             return dto;
         }
