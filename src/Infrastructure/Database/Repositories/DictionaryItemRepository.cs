@@ -12,10 +12,14 @@ namespace BetManager.Infrastructure.Database.Repositories
             => await _context.DictionaryItems.FirstOrDefaultAsync(d => d.Id == id);
 
         public async Task<List<string>> GetUniqueScopesAsync()
-            => await _context.DictionaryItems
-                .Select(d => d.Scope.ToString())
-                .Distinct()
-                .ToListAsync();
+        {
+            var scope = _context.DictionaryItems
+                .Where(d => d.Scope != null)
+                .Select(d => d.Scope!.ToString())
+                .Distinct();
+            
+            return await scope.ToListAsync();
+        }
 
         public async Task<DictionaryItem?> GetByScopeAndItemValueAsync(string scope, string itemValue)
             => await _context.DictionaryItems.FirstOrDefaultAsync(d => d.Scope == scope && d.ItemValue == itemValue);

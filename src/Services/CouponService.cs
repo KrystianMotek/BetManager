@@ -37,7 +37,7 @@ namespace BetManager.Services
             return await _dictionaryItemRepository.GetUniqueScopesAsync();
         }
 
-        public async Task<DictionaryItem?> GetDictionaryItemByScopeAndValueAsync(string scope, string value)
+        public async Task<DictionaryItem> GetDictionaryItemByScopeAndValueAsync(string scope, string value)
         {
             var dictionaryItem = await _dictionaryItemRepository.GetByScopeAndItemValueAsync(scope, value)
                 ?? throw new KeyNotFoundException("no matching dictionary object");
