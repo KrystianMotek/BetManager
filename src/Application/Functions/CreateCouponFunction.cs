@@ -1,7 +1,9 @@
 using System.Text.Json;
 using FluentValidation;
+using BetManager.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using BetManager.Domain.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Azure.Functions.Worker;
 using BetManager.Application.Models.DTO;
 using BetManager.Application.Models.Mappers;
@@ -49,9 +51,24 @@ namespace BetManager.Application.Functions
                 return new BadRequestObjectResult(validationResult.ToDictionary());
             }
 
-            var coupon = await _couponMapper.MapToCouponAsync<CreateCouponDTO, CreateCouponPositionDTO>(dto);
+            Coupon coupon; 
+            try 
+            {
+                coupon = await _couponMapper.MapToCouponAsync<CreateCouponDTO, CreateCouponPositionDTO>(dto);
+            }
+            catch (InvalidOperationException)
+            {
+                return new BadRequestObjectResult("failure when trying to create object");
+            }
 
-            await _couponService.CreateCouponAsync(coupon);
+            try
+            {
+                await _couponService.CreateCouponAsync(coupon);
+            }
+            catch (DbUpdateException)
+            {
+                return new BadRequestObjectResult("failure when trying to create object");
+            }
 
             return new OkObjectResult(new { message = "coupon created successfully" });
         }

@@ -44,16 +44,19 @@ namespace BetManager.Application.Models.Mappers
             var destinationType = typeof(TDestination);
             var dictionaryScopes = await _couponService.GetUniqueDictionaryScopesAsync();
 
-            foreach (var property in typeof(TSource).GetProperties()
-                    .Where(p => p.Name != "Positions" && destinationType.GetProperty(p.Name)?.CanWrite == true))
+            foreach (var sourceProperty in typeof(TSource).GetProperties())
             {
-                var sourceValue = property.GetValue(source);
+                var sourceValue = sourceProperty.GetValue(source);
+                var destionationProperty = destinationType.GetProperty(sourceProperty.Name); 
+                
+                if ((sourceProperty.Name == "Positions") | (destionationProperty?.CanWrite != true)) continue;
 
-                var destinationValue = dictionaryScopes.Contains(property.Name)
-                    ? await _couponService.GetDictionaryItemByScopeAndValueAsync(property.Name, sourceValue?.ToString() ?? string.Empty)
+                var destinationValue = dictionaryScopes.Contains(sourceProperty.Name)
+                    ? await _couponService.GetDictionaryItemByScopeAndValueAsync(sourceProperty.Name, sourceValue?.ToString() ?? string.Empty)
+                    ?? throw new InvalidOperationException("operation failed due to unavailable dictionary value")
                     : sourceValue;
                 
-                destinationType.GetProperty(property.Name)?.SetValue(destination, destinationValue);
+                destionationProperty?.SetValue(destination, destinationValue);
             }
 
             return destination;

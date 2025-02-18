@@ -7,7 +7,7 @@ namespace BetManager.Domain.Services
     {
         Task<Coupon?> GetCouponByIdAsync(Guid id);
         Task<List<string>> GetUniqueDictionaryScopesAsync();
-        Task<DictionaryItem> GetDictionaryItemByScopeAndValueAsync(string scope, string value); 
+        Task<DictionaryItem?> GetDictionaryItemByScopeAndValueAsync(string scope, string value); 
         Task<List<Coupon>> GetCouponsInConclusionTimeRangeAsync(DateTime timeFrom, DateTime timeTo);
         Task<Coupon> CreateCouponAsync(Coupon coupon); 
         Task<Coupon> UpdateCouponAsync(Coupon coupon);
