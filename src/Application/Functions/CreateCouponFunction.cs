@@ -42,7 +42,7 @@ namespace BetManager.Application.Functions
             }
             catch (JsonException)
             {
-                return new BadRequestObjectResult("invalid JSON format");
+                return new BadRequestObjectResult(new { message = "invalid JSON format" });
             }
 
             var validationResult = await _validator.ValidateAsync(dto);
@@ -58,7 +58,7 @@ namespace BetManager.Application.Functions
             }
             catch (InvalidOperationException)
             {
-                return new BadRequestObjectResult("failure when trying to create object");
+                return new BadRequestObjectResult(new { message = "failure when trying to create object" });
             }
 
             try
@@ -67,7 +67,7 @@ namespace BetManager.Application.Functions
             }
             catch (DbUpdateException)
             {
-                return new BadRequestObjectResult("failure when trying to create object");
+                return new BadRequestObjectResult(new { message = "failure when trying to create object" });
             }
 
             return new OkObjectResult(new { message = "coupon created successfully" });
