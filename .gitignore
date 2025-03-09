@@ -1,0 +1,5 @@
+.vscode/*
+*/sample.dat
+*/__pycache__/*
+.python-packages/*
+local.settings.json

@@ -1,0 +1,11 @@
+azure-functions
+
+sqlalchemy
+
+pydantic
+
+typing-extensions
+
+pyodbc
+
+azure-identity

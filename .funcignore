@@ -1,0 +1,7 @@
+.git*
+.vscode
+__blobstorage__
+__azurite_db*__.json
+local.settings.json
+__queuestorage__
+test
